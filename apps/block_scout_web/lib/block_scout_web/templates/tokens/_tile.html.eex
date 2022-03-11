@@ -24,10 +24,10 @@
       to: token_path(BlockScoutWeb.Endpoint, :show, @token.contract_address_hash),
       "data-test": "token_link",
       class: "text-truncate") %>
-  </td>
+
    <%= if Explorer.CustomContractsHelpers.is_official_token(Explorer.Chain.Address.checksum(@token.contract_address_hash)) do%>
       <span class="official-token-icon">Official token</span>
-    <% end %>
+    <% end %></td>
   <td class="stakes-td">
     <%= render BlockScoutWeb.AddressView,
       "_link.html",
