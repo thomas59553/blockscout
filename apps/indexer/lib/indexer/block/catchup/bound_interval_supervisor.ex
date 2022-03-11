@@ -282,7 +282,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
             block_fetcher: %Block.Fetcher{
               json_rpc_named_arguments: [
                 transport: _,
-                transport_options: [http: _, url: url, http_options: _],
+                transport_options: options,
                 variant: _
               ]
             }
@@ -291,7 +291,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
         } = state
       ) do
     Logger.error(fn ->
-      "Catchup index stream exited because the archive node endpoint at #{url} is unavailable. Restarting"
+      "Catchup index stream exited because the archive node endpoint at #{Keyword.get(options, :url)} is unavailable. Restarting"
     end)
 
     send(self(), :catchup_index)
@@ -306,7 +306,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
             block_fetcher: %Block.Fetcher{
               json_rpc_named_arguments: [
                 transport: _,
-                transport_options: [http: _, url: url, http_options: _],
+                transport_options: options,
                 variant: _
               ]
             }
@@ -315,7 +315,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
         } = state
       ) do
     Logger.error(fn ->
-      "Catchup index stream exited because the archive node endpoint at #{url} is unavailable. Restarting"
+      "Catchup index stream exited because the archive node endpoint at #{Keyword.get(options, :url)} is unavailable. Restarting"
     end)
 
     send(self(), :catchup_index)
