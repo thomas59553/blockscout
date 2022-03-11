@@ -5,6 +5,22 @@ defmodule BlockScoutWeb.CurrencyHelpers do
 
   alias BlockScoutWeb.CldrHelper.Number
 
+
+    @doc """
+  Transfer "ERC-20" to "ZRC-20".
+  ## Examples
+      iex> BlockScoutWeb.CurrencyHelpers.transfer_erc20_to_zrc20("ERC-20")
+      "ZRC-20"
+  """
+  @spec transfer_erc20_to_zrc20(String.t()) :: String.t()
+  def transfer_erc20_to_zrc20(value) do
+    case value do
+      "ERC-20" -> "ZRC-20"
+      _ -> value
+    end
+  end
+
+
   @doc """
   Formats the given integer value to a currency format.
 
