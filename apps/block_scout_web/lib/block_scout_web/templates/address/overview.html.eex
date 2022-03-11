@@ -7,8 +7,7 @@
   <% created_from_address_hash = if from_address_hash(@address), do: "0x" <> Base.encode16(from_address_hash(@address).bytes, case: :lower), else: nil %>
  <%= if CustomContractsHelpers.is_in_black_list(@address, "") do%>
     <div class="address-warn">Warning! It was reported that this address is a non-official token deployment. User should be careful when interacting with this address.</div>
-  <% end %>
-  <div class="row js-ad-dependant-mb-2 js-ad-dependant-mb-5-reverse">
+  <% end %> <div class="row js-ad-dependant-mb-2 js-ad-dependant-mb-5-reverse">
     <!-- Address details -->
     <div class="col-md-12 js-ad-dependant-mb-2">
       <div class="card js-ad-dependant-mb-2">
