@@ -211,7 +211,7 @@ defmodule Explorer.Chain do
     |> Repo.debug_query
     |> Repo.all(timeout: :infinity)
   end
-  s
+
   @doc """
   Counts the number of all addresses.
 
