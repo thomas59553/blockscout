@@ -82,6 +82,8 @@ defmodule Explorer.Application do
       configure(Explorer.Chain.Cache.TokenExchangeRate),
       configure(Explorer.Chain.Transaction.History.Historian),
       configure(Explorer.Chain.Events.Listener),
+      configure(Explorer.Chain.Transaction.HistoryCache),
+      configure(Explorer.Chain.Address.HistoryCache),
       configure(Explorer.Counters.AddressesWithBalanceCounter),
       configure(Explorer.Counters.AddressesCounter),
       configure(Explorer.Counters.AddressTransactionsCounter),

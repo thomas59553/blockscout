@@ -8,6 +8,8 @@ import humps from 'humps'
 import numeral from 'numeral'
 import socket from '../socket'
 import { updateAllCalculatedUsdValues, formatUsdValue } from '../lib/currency'
+import { createTransactionHistoryChart } from '../lib/transaction_history_chart'
+import { createAddressTotalHistoryChart } from '../lib/address_total_history_chart'
 import { createStore, connectElements } from '../lib/redux_helpers.js'
 import { batchChannel, showLoader } from '../lib/utils'
 import listMorph from '../lib/list_morph'
@@ -24,6 +26,8 @@ export const initialState = {
   blocks: [],
   blocksLoading: true,
   blocksError: false,
+  transactionHistoryData: null,
+  addressTotalHistoryData: null,
   transactions: [],
   transactionsBatch: [],
   transactionsError: false,
@@ -181,6 +185,24 @@ const elements = {
       if (!chart || (JSON.stringify(oldState.transactionStats) === JSON.stringify(state.transactionStats))) return
 
       chart.updateTransactionHistory(state.transactionStats)
+    }
+  },
+  '[data-transaction-chart="transactionHistoryChart"]': {
+    load ($el) {
+      chart = createTransactionHistoryChart($el[0])
+    },
+    render ($el, state, oldState) {
+      if (!chart || (oldState.availableSupply === state.availableSupply && oldState.transactionHistoryData === state.transactionHistoryData)) return
+      chart.update(state.transactionHistoryData)
+    }
+  },
+  '[data-address-total-chart="addressTotalHistoryChart"]': {
+    load ($el) {
+      chart = createAddressTotalHistoryChart($el[0])
+    },
+    render ($el, state, oldState) {
+      if (!chart || (oldState.availableSupply === state.availableSupply && oldState.addressTotalHistoryData === state.addressTotalHistoryData)) return
+      chart.update(state.addressTotalHistoryData)
     }
   },
   '[data-selector="transaction-count"]': {

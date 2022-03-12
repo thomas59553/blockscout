@@ -34,6 +34,17 @@ defmodule BlockScoutWeb.WebRouter do
       singleton: true
     )
 
+    resources("/transaction_history_chart", Chain.TransactionHistoryChartControllerHome,
+    only: [:show],
+    singleton: true
+    )
+
+    resources("/address_total_history_chart", Chain.AddressTotalHistoryChartController,
+    only: [:show],
+    singleton: true
+    )
+
+
     resources "/block", BlockController, only: [:show], param: "hash_or_number" do
       resources("/transactions", BlockTransactionController, only: [:index], as: :transaction)
     end
