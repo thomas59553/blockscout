@@ -23,6 +23,11 @@
 			Address
 			</div>
 	      </th>
+		   <th class="stakes-table-th">
+			<div class="stakes-table-th-content">
+			Tag Name
+			</div>
+	      </th>
 	      <th class="stakes-table-th">
 			<div class="stakes-table-th-content">
 			Balance
