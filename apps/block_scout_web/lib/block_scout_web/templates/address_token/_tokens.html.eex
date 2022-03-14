@@ -21,6 +21,9 @@
       ) do %>
       <%= token_name(@token) %>
     <% end %>
+ <%= if Explorer.CustomContractsHelpers.is_official_token(Explorer.Chain.Address.checksum(@token.contract_address_hash)) do%>
+                 <span class="official-token-icon">Official token</span>
+              <% end %>
   </td>
   <td class="stakes-td">
     <%= @token.type  %>
