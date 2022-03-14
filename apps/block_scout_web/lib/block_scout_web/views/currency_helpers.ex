@@ -16,6 +16,8 @@ defmodule BlockScoutWeb.CurrencyHelpers do
   def transfer_erc20_to_zrc20(value) do
     case value do
       "ERC-20" -> "ZRC-20"
+      "ERC-721" -> "ZRC-721"
+      "ERC-1155" -> "ZRC-1155"
       _ -> value
     end
   end
