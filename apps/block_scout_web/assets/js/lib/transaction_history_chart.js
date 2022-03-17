@@ -1,4 +1,4 @@
-import $ from 'jquery'
+/*import $ from 'jquery'
 import { Chart } from 'chart.js'
 import sassVariables from '../../css/app.scss'
 
@@ -133,4 +133,4 @@ $('[data-transaction-chart-error-message]').on('click', _event => {
   $('[data-transaction-chart-loading-message]').show()
   $('[data-transaction-chart-error-message]').hide()
   createTransactionHistoryChart($('[data-transaction-chart="TransactionHistoryChart"]')[0])
-})
+})*/
