@@ -57,7 +57,7 @@
 <%= if(String.downcase(to_string(@address)) == String.downcase("0x82c7e2bf375c01193ef0a98cf068c28cb0f5a4f9")) do %>
 <p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 3</small></p><% end %>
 
-<%= if(String.downcase(to_string(@address)) == String.downcase("0x82c7e2bf375c01193ef0a98cf068c28cb0f5a4f9")) do %>
+<%= if(String.downcase(to_string(@address)) == String.downcase("0x10f544b4f75de6da2bd2c127d6f8b50f3c4af387")) do %>
 <p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 4</small></p><% end %>
 
 
