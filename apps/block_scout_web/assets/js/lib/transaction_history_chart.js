@@ -108,10 +108,10 @@ function getTransactionHistoryData (transactionHistoryData) {
 }
 
 export function createTransactionHistoryChart (el) {
-  const dataPath = el.dataset.transaction_history_chart_path2
-  const $chartError = $('[data-chart-error-message]')
-  const $chartLoading = $('[data-chart-loading-message]')
-  const $chartContainer = $('[data-chart-container-address2]')
+  const dataPath = el.dataset.transaction_history_chart_path
+  const $chartError = $('[data-chart-error-message-transaction]')
+  const $chartLoading = $('[data-chart-loading-message-transaction]')
+  const $chartContainer = $('[data-chart-container-transaction]')
 
   const chart = new TransactionHistoryChart(el)
   $.getJSON(dataPath, {type: 'JSON'})

@@ -183,35 +183,52 @@
   <div class="card card-chain-blocks">
     <div class="card-body">
       <div class="row">
-        <div class="col-6">
 
-        <div data-chart-container-address class="mb-4" style="display: none;">
-                <canvas
+  <div class="col-sm-12  col-md-12 col-lg-6">
+          <div data-chart-loading-message-address class="tile tile-muted text-center mt-5">
+            <span class="loading-spinner-small mr-2">
+              <span class="loading-spinner-block-1"></span>
+              <span class="loading-spinner-block-2"></span>
+            </span>
+            <%= gettext("Loading chart") %>...
+          </div>
+          <button data-chart-error-message-address class="alert alert-danger col-12 text-left mt-5" style="display: none;">
+            <span><%= gettext("There was a problem loading the chart.") %></span>
+          </button>
+
+           <div data-chart-container-address class="mb-4" style="display: none;">
+                    <canvas
                   data-chart="addressTotalHistoryChart"
                   data-addresses_history_data_path="/address_total_history_chart"
                   width="350" height="152"></canvas>
 
             </div>
-
-
-       </div>
-
-        <div class="col-6">
-
-         <div data-chart-container-address2 class="mb-4" style="display: none;">
-         <!-- <canvas
-         data-chart="coinBalanceHistoryChart"
-          data-coin_balance_history_data_path="/address/0x5871f824ce0caf08ff12a9c6091e16ed0b5d4c11/coin-balances/by-day"
-           width="350" height="152"></canvas>-->
- <canvas
-         data-chart="transactionsTotalHistoryChart"
-           data-transaction_history_chart_path2="/transaction_history_chart"
-           width="350" height="152"></canvas>
-
           </div>
 
 
+
+          <div class="col-sm-12  col-md-12 col-lg-6">
+          <div data-chart-loading-message-transaction class="tile tile-muted text-center mt-5">
+            <span class="loading-spinner-small mr-2">
+              <span class="loading-spinner-block-1"></span>
+              <span class="loading-spinner-block-2"></span>
+            </span>
+            <%= gettext("Loading chart") %>...
+          </div>
+          <button data-chart-error-message-transaction class="alert alert-danger col-12 text-left mt-5" style="display: none;">
+            <span><%= gettext("There was a problem loading the chart.") %></span>
+          </button>
+
+         <div data-chart-container-transaction class="mb-4" style="display: none;">
+          <canvas
+         data-chart="transactionsTotalHistoryChart"
+           data-transaction_history_chart_path="/transaction_history_chart"
+           width="350" height="152"></canvas>
+
+          </div>
         </div>
+
+
       </div>
     <div>
   </div>

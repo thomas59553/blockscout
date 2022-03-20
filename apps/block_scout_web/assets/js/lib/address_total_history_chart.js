@@ -111,8 +111,8 @@ function getAddressTotalHistoryData (addressTotalHistoryData) {
 
 export function createAddressTotalHistoryChart (el) {
   const dataPath = el.dataset.addresses_history_data_path
-  const $chartError = $('[data-chart-error-message]')
-  const $chartLoading = $('[data-chart-loading-message]')
+  const $chartError = $('[data-chart-error-message-address]')
+  const $chartLoading = $('[data-chart-loading-message-address]')
   const $chartContainer = $('[data-chart-container-address]')
 
 
