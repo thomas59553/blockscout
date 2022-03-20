@@ -1,4 +1,4 @@
-defmodule BlockScoutWeb.Chain.TransactionHistoryChartControllerHome do
+defmodule BlockScoutWeb.Chain.TransactionHistoryChartHomeController do
   use BlockScoutWeb, :controller
 
   alias Explorer.{Chain}

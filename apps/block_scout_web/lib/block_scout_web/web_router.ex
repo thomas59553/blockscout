@@ -34,7 +34,7 @@ defmodule BlockScoutWeb.WebRouter do
       singleton: true
     )
 
-    resources("/transaction_history_chart", Chain.TransactionHistoryChartControllerHome,
+    resources("/transaction_history_chart", Chain.TransactionHistoryChartHomeController,
     only: [:show],
     singleton: true
     )
