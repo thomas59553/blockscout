@@ -169,18 +169,6 @@ config :explorer, Explorer.History.Process, history_fetch_interval: history_fetc
 
 
 
-transaction_history_update_interval =
-  if System.get_env("TRANSACTION_HISTORY_UPDATE_INTERVAL") do
-    case Integer.parse(System.get_env("TRANSACTION_HISTORY_UPDATE_INTERVAL")) do
-      {integer, ""} -> integer
-      _ -> nil
-    end
-  end
-
-  config :explorer, Explorer.Chain.Transaction.HistoryCache,
-  enabled: true,
-  enable_consolidation: true,
-  update_interval_in_seconds: transaction_history_update_interval || 30 * 60
 
   address_total_history_update_interval =
   if System.get_env("ADDRESS_TOTAL_HISTORY_UPDATE_INTERVAL") do
@@ -195,6 +183,18 @@ transaction_history_update_interval =
   enable_consolidation: true,
   update_interval_in_seconds: address_total_history_update_interval || 30 * 60
 
+  transaction_history_update_interval =
+    if System.get_env("TRANSACTION_HISTORY_UPDATE_INTERVAL") do
+      case Integer.parse(System.get_env("TRANSACTION_HISTORY_UPDATE_INTERVAL")) do
+        {integer, ""} -> integer
+        _ -> nil
+      end
+    end
+
+    config :explorer, Explorer.Chain.Transaction.HistoryCache,
+    enabled: true,
+    enable_consolidation: true,
+    update_interval_in_seconds: transaction_history_update_interval || 30 * 60
 
 
 
