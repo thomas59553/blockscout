@@ -1,4 +1,4 @@
-/*import $ from 'jquery'
+import $ from 'jquery'
 import { Chart } from 'chart.js'
 import sassVariables from '../../css/app.scss'
 
@@ -132,4 +132,4 @@ $('[data-address-total-chart-error-message]').on('click', _event => {
   $('[data-address-total-chart-loading-message]').show()
   $('[data-address-total-chart-error-message]').hide()
   createAddressTotalHistoryChart($('[data-address-total-chart="AddressTotalHistoryChart"]')[0])
-})*/
+})
