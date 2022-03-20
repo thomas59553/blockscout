@@ -34,11 +34,12 @@ const jsOptimizationParams = {
 
 const appJs =
   {
-    entry: {
+    entry: {    
       'app': './js/app.js',
       'stakes': './js/pages/stakes.js',
       'chart-loader': './js/chart-loader.js',
       'balance-chart-loader': './js/balance-chart-loader.js',
+      'addresses-chart-loader': './js/addresses-chart-loader.js',
       'chain': './js/pages/chain.js',
       'blocks': './js/pages/blocks.js',
       'address': './js/pages/address.js',

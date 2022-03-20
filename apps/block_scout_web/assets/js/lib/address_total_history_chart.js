@@ -1,64 +1,15 @@
 import $ from 'jquery'
-import { Chart } from 'chart.js'
+import {   Chart,  ArcElement,  LineElement,BarElement,PointElement,BarController,BubbleController,  DoughnutController,LineController,PieController,PolarAreaController,RadarController,ScatterController,CategoryScale,  LinearScale,LogarithmicScale,RadialLinearScale,TimeScale,TimeSeriesScale,Decimation,Filler,Legend,Title,Tooltip} from 'chart.js';
+import 'chartjs-adapter-moment'
+Chart.defaults.font.family = 'Nunito, "Helvetica Neue", Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+Chart.register(  ArcElement,LineElement,BarElement,PointElement,BarController,BubbleController,DoughnutController,LineController,PieController,PolarAreaController,RadarController,ScatterController,CategoryScale,LinearScale,LogarithmicScale,RadialLinearScale,TimeScale,TimeSeriesScale,Decimation,Filler,Legend,Title,Tooltip);
 import sassVariables from '../../css/app.scss'
-
+ 
 const config = {
   type: 'line',
   responsive: true,
   data: {
-    datasets: []
-  },
-  options: {
-    title: {
-      display: true,
-      text: 'New Addresses In 14 Days'
-    },
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        type: 'time',
-        time: {
-          unit: 'day',
-          stepSize: 1
-        }
-      }],
-      yAxes: [{
-        id: 'addressTotal',
-        display: true,
-        gridLines: {
-          display: true,
-          drawBorder: false
-        }
-      }]
-    },
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: ({datasetIndex, yLabel}, {datasets}) => {
-          const label = datasets[datasetIndex].label
-          if (datasets[datasetIndex].yAxisID === 'time') {
-            return `${label}: ${yLabel}`
-          } else if (datasets[datasetIndex].yAxisID === 'addressTotal') {
-            return `${label}: ${yLabel}`
-          } else {
-            return yLabel
-          }
-        }
-      }
-    }
-  }
-}
-
-class AddressTotalHistoryChart {
-  constructor (el) {
-    this.addressTotal = {
+    datasets: [{
       label: 'New Addresses',
       yAxisID: 'addressTotal',
       data: [],
@@ -66,6 +17,56 @@ class AddressTotalHistoryChart {
       backgroundColor: sassVariables.primary,
       borderColor: sassVariables.primary,
       lineTension: 0.3
+    }]
+  },
+  options: {   
+    scales: {
+      x: {     
+        type: 'time',
+        time: {
+          unit: 'day',
+          tooltipFormat: 'YYYY-MM-DD',
+          stepSize: 1
+        }
+        
+      },
+      y: {
+        id: 'addressTotal'  
+      }
+    }, 
+    plugins: {   
+        title: {
+                  display: true,
+                  text: 'New Addresses In 14 Days'
+                },
+                legend: {
+                  display: false
+                },
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                  callbacks: {
+                    
+                    label: ({datasetIndex, yLabel}, {datasets}) => {
+                      const label = datasets[datasetIndex].label
+                      if (datasets[datasetIndex].yAxisID === 'time') {
+                        return `${label}: ${yLabel}`
+                      } else if (datasets[datasetIndex].yAxisID === 'addressTotal') {
+                        return `${label}: ${yLabel}`
+                      } else {
+                        return yLabel
+                      }
+                    }
+                  }
+                }
+          }
+        }                     
+      }
+    
+class AddressTotalHistoryChart {
+  constructor (el) {
+    this.addressTotal = {
+    label: 'New Addresses'      
     }
 
     config.data.datasets = [this.addressTotal]
@@ -77,9 +78,10 @@ class AddressTotalHistoryChart {
       this.addressTotal.data = getAddressTotalHistoryData(addressTotalHistoryData)
       const max = Math.ceil(Math.max(...this.addressTotal.data.map(d => d.y)) * 1.2)
       const min = Math.ceil(Math.min(...this.addressTotal.data.map(d => d.y)) * 0.2)
-
+ 
       const ticks = [max, Math.ceil(max * 0.75), Math.ceil(max * 0.5), Math.ceil(max * 0.25)]
-      config.options.scales.yAxes[0].ticks = {
+     
+      config.options.scales.y.ticks = {
         autoSkip: false,
         maxTicksLimit: 4,
         startAtZero: 0,
@@ -90,16 +92,18 @@ class AddressTotalHistoryChart {
         min
       }
 
-      config.options.scales.yAxes[0].afterBuildTicks = (scale) => {
+     /* config.options.scales.y.afterBuildTicks = (scale) => {
         scale.ticks = ticks
-      }
-
-      config.options.scales.yAxes[0].beforeUpdate = () => {}
+      }*/
+      config.options.scales.y.afterBuildTicks =  ticks
+console.log( config.options.scales.y.afterBuildTicks)
+     // config.options.scalesy.beforeUpdate = () => {}
 
       this.chart.update()
     }
   }
 }
+
 
 function getAddressTotalHistoryData (addressTotalHistoryData) {
   return addressTotalHistoryData.map(txHistoryData => ({
@@ -108,16 +112,24 @@ function getAddressTotalHistoryData (addressTotalHistoryData) {
   }))
 }
 
+
 export function createAddressTotalHistoryChart (el) {
-  const dataPath = el.dataset.address_total_history_chart_path
-  const $chartLoading = $('[data-address-total-chart-loading-message]')
-  const $chartError = $('[data-address-total-chart-error-message]')
+  const dataPath = el.dataset.addresses_history_data_path
+  const $chartError = $('[data-chart-error-message]')
+  const $chartLoading = $('[data-chart-loading-message]')
+  const $chartContainer = $('[data-chart-container-address]')
+
+
+  
   const chart = new AddressTotalHistoryChart(el)
-  $.getJSON(dataPath, {type: 'JSON'})
+
+  $.getJSON(dataPath, { type: 'JSON' })
     .done(data => {
-      const addressTotalHistoryData = JSON.parse(data.address_total_data)
-      $(el).show()
+      const addressTotalHistoryData = JSON.parse(data.address_total_data) 
+      $chartContainer.show()
+    // $(el).show()
       chart.update(addressTotalHistoryData)
+      
     })
     .fail(() => {
       $chartError.show()
@@ -125,11 +137,5 @@ export function createAddressTotalHistoryChart (el) {
     .always(() => {
       $chartLoading.hide()
     })
-  return chart
+    return chart
 }
-
-$('[data-address-total-chart-error-message]').on('click', _event => {
-  $('[data-address-total-chart-loading-message]').show()
-  $('[data-address-total-chart-error-message]').hide()
-  createAddressTotalHistoryChart($('[data-address-total-chart="AddressTotalHistoryChart"]')[0])
-})
