@@ -108,7 +108,7 @@ function getTransactionHistoryData (transactionHistoryData) {
 }
 
 export function createTransactionHistoryChart (el) {
-  const dataPath = el.dataset.transaction_history_chart_path
+  const dataPath = el.dataset.transaction_history_chart_home_path
   const $chartError = $('[data-chart-error-message-transaction]')
   const $chartLoading = $('[data-chart-loading-message-transaction]')
   const $chartContainer = $('[data-chart-container-transaction]')

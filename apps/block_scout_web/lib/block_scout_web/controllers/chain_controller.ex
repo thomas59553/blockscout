@@ -55,6 +55,7 @@ defmodule BlockScoutWeb.ChainController do
       transaction_estimated_count: transaction_estimated_count,
       total_gas_usage: total_gas_usage,
       transactions_path: recent_transactions_path(conn, :index),
+      transaction_chart_data_home_path: transaction_history_chart_home_path(conn, :show),
       transaction_chart_data_path: transaction_history_chart_path(conn, :show),
       address_total_chart_data_path: address_total_history_chart_path(conn, :show),
       transaction_stats: transaction_stats,

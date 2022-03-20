@@ -199,7 +199,7 @@
            <div data-chart-container-address class="mb-4" style="display: none;">
                     <canvas
                   data-chart="addressTotalHistoryChart"
-                  data-addresses_history_data_path="/address_total_history_chart"
+                  data-addresses_history_data_path="<%= @address_total_chart_data_path %>"
                   width="350" height="152"></canvas>
 
             </div>
@@ -222,7 +222,7 @@
          <div data-chart-container-transaction class="mb-4" style="display: none;">
           <canvas
          data-chart="transactionsTotalHistoryChart"
-           data-transaction_history_chart_path="/transaction_history_chart"
+           data-transaction_history_chart_home_path="<%= @transaction_chart_data_home_path %>"
            width="350" height="152"></canvas>
 
           </div>
@@ -234,8 +234,6 @@
   </div>
    </section>
 <br>
-
-
 <section class="container">
   <div class="card card-chain-blocks js-ad-dependant-mb-3">
     <div class="card-body">
