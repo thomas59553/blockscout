@@ -268,7 +268,7 @@ defmodule Explorer.Chain.Address do
       inner_join: b in Block,
       on: a.fetched_coin_balance_block_number == b.number,
       select: [fragment("date_trunc('day', ?)", b.timestamp), fragment("COUNT(*)")],
-      where: fragment("timestamp > date_trunc('day', now()) - INTERVAL '14 DAY' AND timestamp < date_trunc('day', now())"),
+      where: fragment("timestamp > date_trunc('day', now()) - INTERVAL '30 DAY' AND timestamp < date_trunc('day', now())"),
       group_by: [1],
       order_by: [1]
     )
