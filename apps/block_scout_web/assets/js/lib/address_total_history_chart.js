@@ -21,14 +21,13 @@ const config = {
   },
   options: {   
     scales: {
-      x: {     
+      x: {        
         type: 'time',
         time: {
           unit: 'day',
           tooltipFormat: 'YYYY-MM-DD',
           stepSize: 1
-        }
-        
+        }        
       },
       y: {
         id: 'addressTotal'  
@@ -37,7 +36,7 @@ const config = {
     plugins: {   
         title: {
                   display: true,
-                  text: 'New Addresses In 14 Days'
+                  text: 'New Addresses'
                 },
                 legend: {
                   display: false
@@ -66,7 +65,7 @@ const config = {
 class AddressTotalHistoryChart {
   constructor (el) {
     this.addressTotal = {
-    label: 'New Addresses'      
+    label: 'New Addresses'  
     }
 
     config.data.datasets = [this.addressTotal]
@@ -91,12 +90,9 @@ class AddressTotalHistoryChart {
         max,
         min
       }
-
-     /* config.options.scales.y.afterBuildTicks = (scale) => {
-        scale.ticks = ticks
-      }*/
+      
       config.options.scales.y.afterBuildTicks =  ticks
-console.log( config.options.scales.y.afterBuildTicks)
+
      // config.options.scalesy.beforeUpdate = () => {}
 
       this.chart.update()

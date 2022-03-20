@@ -177,7 +177,8 @@
 
 <section class="container">
   <script defer src="/js/addresses-chart-loader.js"></script>
-  <script defer src="/js/balance-chart-loader.js"></script>
+   <script defer src="/js/transactions-chart-loader.js"></script>
+
 
   <div class="card card-chain-blocks">
     <div class="card-body">
@@ -197,12 +198,15 @@
 
         <div class="col-6">
 
-         <div data-chart-container class="mb-4" style="display: none;">
-          <canvas
-          data-chart="coinBalanceHistoryChart"
+         <div data-chart-container-address2 class="mb-4" style="display: none;">
+         <!-- <canvas
+         data-chart="coinBalanceHistoryChart"
           data-coin_balance_history_data_path="/address/0x5871f824ce0caf08ff12a9c6091e16ed0b5d4c11/coin-balances/by-day"
+           width="350" height="152"></canvas>-->
+ <canvas
+         data-chart="transactionsTotalHistoryChart"
+           data-transaction_history_chart_path2="/transaction_history_chart"
            width="350" height="152"></canvas>
-
 
           </div>
 
