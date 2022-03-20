@@ -1,64 +1,15 @@
 import $ from 'jquery'
-import { Chart } from 'chart.js'
+import {   Chart,  ArcElement,  LineElement,BarElement,PointElement,BarController,BubbleController,  DoughnutController,LineController,PieController,PolarAreaController,RadarController,ScatterController,CategoryScale,  LinearScale,LogarithmicScale,RadialLinearScale,TimeScale,TimeSeriesScale,Decimation,Filler,Legend,Title,Tooltip} from 'chart.js';
+import 'chartjs-adapter-moment'
+Chart.defaults.font.family = 'Nunito, "Helvetica Neue", Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+Chart.register(  ArcElement,LineElement,BarElement,PointElement,BarController,BubbleController,DoughnutController,LineController,PieController,PolarAreaController,RadarController,ScatterController,CategoryScale,LinearScale,LogarithmicScale,RadialLinearScale,TimeScale,TimeSeriesScale,Decimation,Filler,Legend,Title,Tooltip);
 import sassVariables from '../../css/app.scss'
 
 const config = {
   type: 'line',
   responsive: true,
   data: {
-    datasets: []
-  },
-  options: {
-    title: {
-      display: true,
-      text: 'Transaction History In 14 Days'
-    },
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        type: 'time',
-        time: {
-          unit: 'day',
-          stepSize: 1
-        }
-      }],
-      yAxes: [{
-        id: 'transaction',
-        display: true,
-        gridLines: {
-          display: true,
-          drawBorder: false
-        }
-      }]
-    },
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: ({datasetIndex, yLabel}, {datasets}) => {
-          const label = datasets[datasetIndex].label
-          if (datasets[datasetIndex].yAxisID === 'time') {
-            return `${label}: ${yLabel}`
-          } else if (datasets[datasetIndex].yAxisID === 'transaction') {
-            return `${label}: ${yLabel}`
-          } else {
-            return yLabel
-          }
-        }
-      }
-    }
-  }
-}
-
-class TransactionHistoryChart {
-  constructor (el) {
-    this.transaction = {
+    datasets: [{
       label: 'Transactions',
       yAxisID: 'transaction',
       data: [],
@@ -66,6 +17,54 @@ class TransactionHistoryChart {
       backgroundColor: sassVariables.primary,
       borderColor: sassVariables.primary,
       lineTension: 0.3
+    }]
+  },
+  options: {   
+    scales: {
+      x: {     
+        type: 'time',
+        time: {
+          unit: 'day',
+          tooltipFormat: 'YYYY-MM-DD',
+          stepSize: 1
+        }        
+      },
+      y: {
+        id: 'transaction'  
+      }
+    }, 
+    plugins: { 
+        title: {
+          display: true,
+          text: 'Transactions History'
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: ({datasetIndex, yLabel}, {datasets}) => {
+              const label = datasets[datasetIndex].label
+              if (datasets[datasetIndex].yAxisID === 'time') {
+                return `${label}: ${yLabel}`
+              } else if (datasets[datasetIndex].yAxisID === 'transaction') {
+                return `${label}: ${yLabel}`
+              } else {
+                return yLabel
+              }
+            }
+          }
+        }
+      }
+  }
+}
+
+class TransactionHistoryChart {
+  constructor (el) {
+    this.transaction = {
+      label: 'Transactions'       
     }
 
     config.data.datasets = [this.transaction]
@@ -80,7 +79,7 @@ class TransactionHistoryChart {
       const min = Math.ceil(Math.min(...this.transaction.data.map(d => d.y)) * 0.2)
 
       const ticks = [max, Math.ceil(max * 0.75), Math.ceil(max * 0.5), Math.ceil(max * 0.25)]
-      config.options.scales.yAxes[0].ticks = {
+      config.options.scales.y.ticks = {
         autoSkip: false,
         maxTicksLimit: 4,
         startAtZero: 0,
@@ -91,11 +90,10 @@ class TransactionHistoryChart {
         min
       }
 
-      config.options.scales.yAxes[0].afterBuildTicks = (scale) => {
-        scale.ticks = ticks
-      }
+      config.options.scales.y.afterBuildTicks =  ticks
+      
 
-      config.options.scales.yAxes[0].beforeUpdate = () => {}
+      //config.options.scales.yAxes[0].beforeUpdate = () => {}
 
       this.chart.update()
     }
@@ -111,13 +109,16 @@ function getTransactionHistoryData (transactionHistoryData) {
 
 export function createTransactionHistoryChart (el) {
   const dataPath = el.dataset.transaction_history_chart_path
-  const $chartLoading = $('[data-transaction-chart-loading-message]')
-  const $chartError = $('[data-transaction-chart-error-message]')
-  const chart = new TransactionHistoryChart(el, [])
+  const $chartError = $('[data-chart-error-message-transaction]')
+  const $chartLoading = $('[data-chart-loading-message-transaction]')
+  const $chartContainer = $('[data-chart-container-transaction]')
+
+  const chart = new TransactionHistoryChart(el)
   $.getJSON(dataPath, {type: 'JSON'})
     .done(data => {
       const transactionHistoryData = JSON.parse(data.transaction_data)
-      $(el).show()
+    //  $(el).show()
+    $chartContainer.show()
       chart.update(transactionHistoryData)
     })
     .fail(() => {
@@ -128,9 +129,3 @@ export function createTransactionHistoryChart (el) {
     })
   return chart
 }
-
-$('[data-transaction-chart-error-message]').on('click', _event => {
-  $('[data-transaction-chart-loading-message]').show()
-  $('[data-transaction-chart-error-message]').hide()
-  createTransactionHistoryChart($('[data-transaction-chart="TransactionHistoryChart"]')[0])
-})
