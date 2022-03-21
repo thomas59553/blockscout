@@ -67,7 +67,8 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
     query_params = %{
       "fsym" => Explorer.coin(),
       "limit" => previous_days,
-      "tsym" => "USD"
+      "tsym" => "USDT",
+       "e" => "probit"
     }
 
     "#{base_url()}/data/histoday?#{URI.encode_query(query_params)}"
