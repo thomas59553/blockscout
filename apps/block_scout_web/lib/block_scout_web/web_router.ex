@@ -43,7 +43,10 @@ defmodule BlockScoutWeb.WebRouter do
     only: [:show],
     singleton: true
     )
-
+    resources("/transfer_history_chart", Chain.TransferHistoryChartHomeController,
+    only: [:show],
+    singleton: true
+    )
 
     resources "/block", BlockController, only: [:show], param: "hash_or_number" do
       resources("/transactions", BlockTransactionController, only: [:index], as: :transaction)
