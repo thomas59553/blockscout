@@ -192,6 +192,17 @@ defmodule Explorer.Chain do
   end
 
 
+  def count_transfers_per_day_from_cache do
+    TokenTransfer.HistoryCache.fetch()
+  end
+
+  def count_transfers_per_day do
+    TokenTransfer.count_transfers_per_day
+    |> Repo.debug_query
+    |> Repo.all(timeout: :infinity)
+  end
+
+
   def count_transactions_per_day_from_cache do
     Transaction.HistoryCache.fetch()
   end

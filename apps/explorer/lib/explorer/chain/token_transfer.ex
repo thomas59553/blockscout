@@ -300,6 +300,23 @@ defmodule Explorer.Chain.TokenTransfer do
   end
 
   @doc """
+  Counts all the token transfer per day
+ """
+  def count_transfers_per_day do
+    from(
+      t in TokenTransfer,
+      inner_join: b in Block,
+      on: t.block_number == b.number,
+      select: [fragment("date_trunc('day', ?)", b.timestamp), fragment("COUNT(*)")],
+      where: fragment("timestamp > date_trunc('day', now()) - INTERVAL '30 DAY' AND timestamp < date_trunc('day', now())"),
+      group_by: [1],
+      order_by: [1]
+    )
+  end
+
+
+
+  @doc """
   Innventory tab query.
   A token ERC-721 is considered unique because it corresponds to the possession
   of a specific asset.
