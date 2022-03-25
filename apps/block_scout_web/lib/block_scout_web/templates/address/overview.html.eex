@@ -114,6 +114,18 @@
 <%= if(String.downcase(to_string(@address)) == String.downcase("0x10f544b4f75de6da2bd2c127d6f8b50f3c4af387")) do %>
 <p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 4</small></p><% end %>
 
+<%= if(String.downcase(to_string(@address)) == String.downcase("0x38b2b8f1f3c559c2eede63b2d518b150d6c6db5c")) do %>
+<p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 5</small></p><% end %>
+
+<%= if(String.downcase(to_string(@address)) == String.downcase("0x4f714492d68ed427d15d79940320620cbd31ebd2")) do %>
+<p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 6</small></p><% end %>
+
+<%= if(String.downcase(to_string(@address)) == String.downcase("0x0393148e86878faca0c7c012345bb15e2ed40895")) do %>
+<p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Node Team 7</small></p><% end %>
+
+
+
+
 
 <%= if(String.downcase(to_string(@address)) == String.downcase("0x7F14Bd5c54EE9f685B26Ba738Ae0e489033A0e80")) do %>
 <p class="mb-0"><small class="border-dark p-1 bg-success text-white rounded">Rembousement IDAX</small></p><% end %>
