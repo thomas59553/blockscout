@@ -3539,18 +3539,14 @@ defmodule Explorer.Chain do
 
 
 
+
   @spec staking_estimated_count() :: non_neg_integer()
   def staking_estimated_count do
     %Postgrex.Result{rows: [[cached_value]]} = Repo.query!("SELECT fetched_coin_balance FROM addresses WHERE hash = '\\x02efa7f0b1838763d8aef9f845cebf0b0fc0b13b';")
       %Wei{value: Decimal.new(cached_value)}
       |> Wei.to(:ether)
-
-          if is_nil(cached_value) do
-            0
-          else
-            cached_value
-          end
          end
+
 
 
 
