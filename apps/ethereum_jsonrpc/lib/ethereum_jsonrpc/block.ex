@@ -578,9 +578,10 @@ defmodule EthereumJSONRPC.Block do
   # committedSeals committee pastCommittedSeals proposerSeal round - Autonity network https://github.com/blockscout/blockscout/pull/3480
   # blockGasCost extDataGasUsed - sgb/ava https://github.com/blockscout/blockscout/pull/5301
   # blockExtraData extDataHash - Avalanche https://github.com/blockscout/blockscout/pull/5348
+  # penalties validator validators - Wethio
   defp entry_to_elixir({key, _} = entry)
        when key in ~w(author extraData hash logsBloom miner mixHash nonce parentHash receiptsRoot sealFields sha3Uncles
-                     signature stateRoot step transactionsRoot uncles bitcoinMergedMiningCoinbaseTransaction bitcoinMergedMiningHeader bitcoinMergedMiningMerkleProof hashForMergedMining committedSeals committee pastCommittedSeals proposerSeal round blockGasCost extDataGasUsed blockExtraData extDataHash),
+                     signature stateRoot step transactionsRoot uncles bitcoinMergedMiningCoinbaseTransaction bitcoinMergedMiningHeader bitcoinMergedMiningMerkleProof hashForMergedMining committedSeals committee pastCommittedSeals proposerSeal round blockGasCost extDataGasUsed blockExtraData extDataHash penalties validator validators),
        do: entry
 
   defp entry_to_elixir({"timestamp" = key, timestamp}) do
