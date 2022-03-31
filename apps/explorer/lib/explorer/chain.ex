@@ -3544,17 +3544,18 @@ defmodule Explorer.Chain do
     %Postgrex.Result{rows: [[cached_value]]} = Repo.query!("SELECT fetched_coin_balance FROM addresses WHERE hash = '\\x02efa7f0b1838763d8aef9f845cebf0b0fc0b13b';")
       %Wei{value: Decimal.new(cached_value)}
       |> Wei.to(:ether)
-
-          if is_nil(cached_value) do
-            0
-          else
-            cached_value
-          end
          end
 
-
-
 # Explorer.Chain.balance(System.get_env("VALIDATORS_CONTRACT"))
+
+@spec fetch_sum_coin_total_supply() :: non_neg_integer
+def fetch_sum_coin_total_supply do
+  %Postgrex.Result{rows: [[cached_value]]} = Repo.query!("SELECT SUM(fetched_coin_balance) FROM addresses WHERE fetched_coin_balance > 0;")
+  %Wei{value: Decimal.new(cached_value)}
+  |> Wei.to(:ether)
+     end
+
+
 
 
 
@@ -3649,7 +3650,7 @@ defmodule Explorer.Chain do
     log_with_transactions =
       from(log in Log,
         inner_join: transaction in Transaction,
-        on:
+        on:n
           transaction.block_hash == log.block_hash and transaction.block_number == log.block_number and
             transaction.hash == log.transaction_hash
       )
