@@ -91,7 +91,6 @@ defmodule EthereumJSONRPC.Block do
 
   @doc """
   Converts `t:elixir/0` format to params used in `Explorer.Chain`.
-
       iex> EthereumJSONRPC.Block.elixir_to_params(
       ...>   %{
       ...>     "author" => "0xe8ddc5c7a2d2f0d7a9798459c0104fdf5e987aca",
@@ -142,9 +141,7 @@ defmodule EthereumJSONRPC.Block do
         transactions_root: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
         uncles: []
       }
-
   [Geth] `elixir` can be converted to params
-
       iex> EthereumJSONRPC.Block.elixir_to_params(
       ...>   %{
       ...>     "difficulty" => 17561410778,
@@ -190,7 +187,6 @@ defmodule EthereumJSONRPC.Block do
         transactions_root: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
         uncles: []
       }
-
   """
   @spec elixir_to_params(elixir) :: params
   def elixir_to_params(
@@ -372,7 +368,6 @@ defmodule EthereumJSONRPC.Block do
 
   @doc """
   Get `t:EthereumJSONRPC.Transactions.elixir/0` from `t:elixir/0`
-
       iex> EthereumJSONRPC.Block.elixir_to_transactions(
       ...>   %{
       ...>     "author" => "0xe8ddc5c7a2d2f0d7a9798459c0104fdf5e987aca",
@@ -449,7 +444,6 @@ defmodule EthereumJSONRPC.Block do
           "value" => 0
         }
       ]
-
   """
   @spec elixir_to_transactions(elixir) :: Transactions.elixir()
   def elixir_to_transactions(%{"transactions" => transactions}), do: transactions
@@ -458,9 +452,7 @@ defmodule EthereumJSONRPC.Block do
 
   @doc """
   Get `t:EthereumJSONRPC.Uncles.elixir/0` from `t:elixir/0`.
-
   Because an uncle can have multiple nephews, the `t:elixir/0` `"hash"` value is included as the `"nephewHash"` value.
-
       iex> EthereumJSONRPC.Block.elixir_to_uncles(
       ...>   %{
       ...>     "author" => "0xe8ddc5c7a2d2f0d7a9798459c0104fdf5e987aca",
@@ -497,7 +489,6 @@ defmodule EthereumJSONRPC.Block do
           "index" => 0
         }
       ]
-
   """
   @spec elixir_to_uncles(elixir) :: Uncles.elixir()
   def elixir_to_uncles(%{"hash" => nephew_hash, "uncles" => uncles}) do
@@ -508,7 +499,6 @@ defmodule EthereumJSONRPC.Block do
 
   @doc """
   Decodes the stringly typed numerical fields to `t:non_neg_integer/0` and the timestamps to `t:DateTime.t/0`
-
       iex> EthereumJSONRPC.Block.to_elixir(
       ...>   %{
       ...>     "author" => "0xe8ddc5c7a2d2f0d7a9798459c0104fdf5e987aca",
@@ -565,7 +555,6 @@ defmodule EthereumJSONRPC.Block do
         "transactionsRoot" => "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
         "uncles" => []
       }
-
   """
   def to_elixir(block) when is_map(block) do
     Enum.into(block, %{}, &entry_to_elixir/1)
@@ -590,9 +579,9 @@ defmodule EthereumJSONRPC.Block do
   # blockGasCost extDataGasUsed - sgb/ava https://github.com/blockscout/blockscout/pull/5301
   # blockExtraData extDataHash - Avalanche https://github.com/blockscout/blockscout/pull/5348
   defp entry_to_elixir({key, _} = entry)
-          when key in ~w(author extraData hash logsBloom miner mixHash nonce parentHash receiptsRoot sealFields sha3Uncles
-                     signature stateRoot step transactionsRoot uncles bitcoinMergedMiningCoinbaseTransaction bitcoinMergedMiningHeader bitcoinMergedMiningMerkleProof hashForMergedMining committedSeals committee pastCommittedSeals proposerSeal round blockGasCost extDataGasUsed),
-                     do: entry
+       when key in ~w(author extraData hash logsBloom miner mixHash nonce parentHash receiptsRoot sealFields sha3Uncles
+                     signature stateRoot step transactionsRoot uncles bitcoinMergedMiningCoinbaseTransaction bitcoinMergedMiningHeader bitcoinMergedMiningMerkleProof hashForMergedMining committedSeals committee pastCommittedSeals proposerSeal round blockGasCost extDataGasUsed blockExtraData extDataHash),
+       do: entry
 
   defp entry_to_elixir({"timestamp" = key, timestamp}) do
     {key, timestamp_to_datetime(timestamp)}
