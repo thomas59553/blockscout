@@ -171,6 +171,12 @@
               <%= BlockScoutWeb.Cldr.Number.to_string!(@staking_count, format: "#,###") %>
             </span>
            </div>
+        <div class="dashboard-banner-network-stats-item dashboard-banner-network-stats-item-6">
+            <span class="dashboard-banner-network-stats-label">
+              <%= gettext "Total Supply ( Max supply : 101.000.000 )" %>
+            <span class="dashboard-banner-network-stats-value" data-selector="supply-count">
+       <%= BlockScoutWeb.Cldr.Number.to_string!(@supply_count, format: "#,###") %>
+
         </div>
       </div>
     </div>

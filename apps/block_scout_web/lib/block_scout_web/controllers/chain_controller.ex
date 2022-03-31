@@ -19,6 +19,7 @@ defmodule BlockScoutWeb.ChainController do
     block_count = Chain.block_estimated_count()
     address_count = Chain.address_estimated_count()
     staking_count = Chain.staking_estimated_count()
+    supply_count = Chain.fetch_sum_coin_total_supply()
 
     market_cap_calculation =
       case Application.get_env(:explorer, :supply) do
@@ -47,6 +48,7 @@ defmodule BlockScoutWeb.ChainController do
       conn,
       "show.html",
       staking_count: staking_count,
+      supply_count: supply_count,
       address_count: address_count,
       average_block_time: AverageBlockTime.average_block_time(),
       exchange_rate: exchange_rate,
