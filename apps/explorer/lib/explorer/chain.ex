@@ -3626,7 +3626,7 @@ def fetch_sum_coin_total_supply do
     log_with_transactions =
       from(log in Log,
         inner_join: transaction in Transaction,
-        on:n
+        on:
           transaction.block_hash == log.block_hash and transaction.block_number == log.block_number and
             transaction.hash == log.transaction_hash
       )
