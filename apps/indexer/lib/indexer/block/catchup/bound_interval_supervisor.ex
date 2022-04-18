@@ -18,7 +18,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
         }
 
   # milliseconds
-  @block_interval 5_000
+  @block_interval 2_000 #5_000
 
   @enforce_keys ~w(bound_interval fetcher)a
   defstruct bound_interval: nil,
@@ -67,7 +67,7 @@ defmodule Indexer.Block.Catchup.BoundIntervalSupervisor do
 
     block_interval = Map.get(named_arguments, :block_interval, @block_interval)
     minimum_interval = div(block_interval, 2)
-    bound_interval = BoundInterval.within(minimum_interval..(minimum_interval * 10))
+    bound_interval = BoundInterval.within(minimum_interval..(minimum_interval * 5)) # * 10
 
     %__MODULE__{
       fetcher: %Catchup.Fetcher{block_fetcher: block_fetcher, memory_monitor: Map.get(named_arguments, :memory_monitor)},
