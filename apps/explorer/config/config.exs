@@ -16,7 +16,7 @@ config :explorer,
       "homestead,tangerineWhistle,spuriousDragon,byzantium,constantinople,petersburg,istanbul,berlin,london,default",
   include_uncles_in_average_block_time:
     if(System.get_env("UNCLES_IN_AVERAGE_BLOCK_TIME") == "true", do: true, else: false),
-  healthy_blocks_period: System.get_env("HEALTHY_BLOCKS_PERIOD") || :timer.minutes(5),
+  healthy_blocks_period: System.get_env("HEALTHY_BLOCKS_PERIOD") || :timer.minutes(2),
   realtime_events_sender:
     if(System.get_env("DISABLE_WEBAPP") != "true",
       do: Explorer.Chain.Events.SimpleSender,
@@ -43,7 +43,7 @@ config :explorer, Explorer.ChainSpec.GenesisData,
 config :explorer, Explorer.Chain.Cache.BlockNumber,
   enabled: true,
   ttl_check_interval: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(1), else: false),
-  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(5))
+  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(2))
 
 address_sum_global_ttl =
   "CACHE_ADDRESS_SUM_PERIOD"
@@ -281,19 +281,19 @@ config :spandex_ecto, SpandexEcto.EctoLogger,
 
 config :explorer, Explorer.Chain.Cache.Blocks,
   ttl_check_interval: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(1), else: false),
-  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(5))
+  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(2))
 
 config :explorer, Explorer.Chain.Cache.Transactions,
   ttl_check_interval: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(1), else: false),
-  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(5))
+  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(2))
 
 config :explorer, Explorer.Chain.Cache.Accounts,
   ttl_check_interval: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(1), else: false),
-  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(5))
+  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(2))
 
 config :explorer, Explorer.Chain.Cache.Uncles,
   ttl_check_interval: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(1), else: false),
-  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(5))
+  global_ttl: if(System.get_env("DISABLE_INDEXER") == "true", do: :timer.seconds(2))
 
 config :explorer, Explorer.ThirdPartyIntegrations.Sourcify,
   server_url: System.get_env("SOURCIFY_SERVER_URL") || "https://sourcify.dev/server",
