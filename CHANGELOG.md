@@ -1,6 +1,28 @@
 ## Current
 
 ### Features
+- [#5588](https://github.com/blockscout/blockscout/pull/5588) - Add broadcasting of coin balance
+- [#5479](https://github.com/blockscout/blockscout/pull/5479) - Remake of solidity verifier module; Verification UX improvements
+- [#5540](https://github.com/blockscout/blockscout/pull/5540) - Tx page: scroll to selected tab's data
+
+### Fixes
+- [#5603](https://github.com/blockscout/blockscout/pull/5603) - Fix failing verification attempts
+- [#5598](https://github.com/blockscout/blockscout/pull/5598) - Fix token dropdown
+- [#5592](https://github.com/blockscout/blockscout/pull/5592) - Burn fees for legacy transactions
+- [#5568](https://github.com/blockscout/blockscout/pull/5568) - Add regexp for ipfs checking
+- [#5567](https://github.com/blockscout/blockscout/pull/5567) - Sanitize token name and symbol before insert into DB, display in the application
+- [#5564](https://github.com/blockscout/blockscout/pull/5564) - Add fallback clauses to `string_to_..._hash` functions
+- [#5538](https://github.com/blockscout/blockscout/pull/5538) - Fix internal transaction's tile bug
+
+### Chore
+- [#5543](https://github.com/blockscout/blockscout/pull/5543) - Increase max_restarts to 1_000 (from 3 by default) for explorer, block_scout_web supervisors
+- [#5536](https://github.com/blockscout/blockscout/pull/5536) - NPM audit fix
+
+
+## 4.1.3-beta
+
+### Features
+- [#5515](https://github.com/blockscout/blockscout/pull/5515) - Integrate ace editor to display contract sources
 - [#5505](https://github.com/blockscout/blockscout/pull/5505) - Manage debug_traceTransaction JSON RPC method timeout
 - [#5491](https://github.com/blockscout/blockscout/pull/5491) - Sequential blocks broadcast on the main page
 - [#5312](https://github.com/blockscout/blockscout/pull/5312) - Add OpenZeppelin proxy storage slot
@@ -8,6 +30,8 @@
 - [#5268](https://github.com/blockscout/blockscout/pull/5268), [#5313](https://github.com/blockscout/blockscout/pull/5313) - Contract names display improvement
 
 ### Fixes
+- [#5528](https://github.com/blockscout/blockscout/pull/5528) - Token balances fetcher retry
+- [#5524](https://github.com/blockscout/blockscout/pull/5524) - ContractState module resistance to unresponsive archive node
 - [#5513](https://github.com/blockscout/blockscout/pull/5513) - Do not fill pending blocks ops with block numbers below TRACE_FIRST_BLOCK
 - [#5508](https://github.com/blockscout/blockscout/pull/5508) - Hide indexing banner if we fetched internal transactions from TRACE_FIRST_BLOCK
 - [#5504](https://github.com/blockscout/blockscout/pull/5504) - Extend TRACE_FIRST_BLOCK env var to geth variant
