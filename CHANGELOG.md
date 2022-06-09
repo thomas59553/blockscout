@@ -1,6 +1,7 @@
 ## Current
 
 ### Features
+- [#5656](https://github.com/blockscout/blockscout/pull/5656) - Gas price oracle
 - [#5613](https://github.com/blockscout/blockscout/pull/5613) - Exchange rates CoinMarketCap source module
 - [#5588](https://github.com/blockscout/blockscout/pull/5588) - Add broadcasting of coin balance
 - [#5479](https://github.com/blockscout/blockscout/pull/5479) - Remake of solidity verifier module; Verification UX improvements
@@ -20,7 +21,7 @@
 - [#5538](https://github.com/blockscout/blockscout/pull/5538) - Fix internal transaction's tile bug
 
 ### Chore
-- [#5651](https://github.com/blockscout/blockscout/pull/5651) - Gnosis chain rebranded theme and generalization of chart legend colors definition
+- [#5651](https://github.com/blockscout/blockscout/pull/5651), [#5657](https://github.com/blockscout/blockscout/pull/5657) - Gnosis chain rebranded theme and generalization of chart legend colors definition
 - [#5640](https://github.com/blockscout/blockscout/pull/5640) - Clean up and fix tests, reduce amount of warnings
 - [#5625](https://github.com/blockscout/blockscout/pull/5625) - Get rid of some redirects to checksummed address url
 - [#5623](https://github.com/blockscout/blockscout/pull/5623) - Allow hyphen in DB password
