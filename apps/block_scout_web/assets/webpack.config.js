@@ -36,7 +36,6 @@ const appJs =
   {
     entry: {    
       'app': './js/app.js',
-      'stakes': './js/pages/stakes.js',
       'chart-loader': './js/chart-loader.js',
       'balance-chart-loader': './js/balance-chart-loader.js',
       'home-charts-loader': './js/home-charts-loader.js',      
@@ -64,7 +63,6 @@ const appJs =
       'async-listing-load': './js/lib/async_listing_load',
       'non-critical': './css/non-critical.scss',
       'main-page': './css/main-page.scss',
-      'staking': './css/stakes.scss',
       'tokens': './js/pages/token/search.js',
       'text-ad': './js/lib/text_ad.js',
       'banner': './js/lib/banner.js',
