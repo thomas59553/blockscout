@@ -5,9 +5,6 @@
 # is restricted to this project.
 import Config
 
-disable_indexer = System.get_env("DISABLE_INDEXER")
-disable_webapp = System.get_env("DISABLE_WEBAPP")
-
 # General application configuration
 config :explorer,
   ecto_repos: [Explorer.Repo],
@@ -30,18 +27,7 @@ config :explorer, Explorer.Counters.AverageBlockTime,
   enabled: true,
   period: :timer.minutes(10)
 
-config :explorer, Explorer.Chain.Events.Listener,
-  enabled:
-    if(disable_webapp == "true" && disable_indexer == "true",
-      do: false,
-      else: true
-    )
-
-config :explorer, Explorer.ChainSpec.GenesisData,
-  enabled: true,
-  chain_spec_path: System.get_env("CHAIN_SPEC_PATH"),
-  emission_format: System.get_env("EMISSION_FORMAT", "DEFAULT"),
-  rewards_contract_address: System.get_env("REWARDS_CONTRACT", "0xeca443e8e1ab29971a45a9c57a6a9875701698a5")
+config :explorer, Explorer.ChainSpec.GenesisData, enabled: true
 
 config :explorer, Explorer.Chain.Cache.BlockNumber,
   enabled: true,
@@ -59,13 +45,11 @@ address_sum_global_ttl =
 
 config :explorer, Explorer.Chain.Cache.AddressSum,
   enabled: true,
-  ttl_check_interval: :timer.seconds(1),
-  global_ttl: address_sum_global_ttl
+  ttl_check_interval: :timer.seconds(1)
 
 config :explorer, Explorer.Chain.Cache.AddressSumMinusBurnt,
   enabled: true,
-  ttl_check_interval: :timer.seconds(1),
-  global_ttl: address_sum_global_ttl
+  ttl_check_interval: :timer.seconds(1)
 
 cache_address_with_balances_update_interval = System.get_env("CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL")
 
@@ -126,28 +110,7 @@ config :explorer, Explorer.Counters.BlockPriorityFeeCounter,
 config :explorer, Explorer.Chain.Cache.GasUsage,
   enabled: System.get_env("CACHE_ENABLE_TOTAL_GAS_USAGE_COUNTER") == "true"
 
-config :explorer, Explorer.ExchangeRates,
-  enabled: System.get_env("DISABLE_EXCHANGE_RATES") != "true",
-  store: :ets,
-  coingecko_coin_id: System.get_env("EXCHANGE_RATES_COINGECKO_COIN_ID"),
-  coingecko_api_key: System.get_env("EXCHANGE_RATES_COINGECKO_API_KEY"),
-  coinmarketcap_api_key: System.get_env("EXCHANGE_RATES_COINMARKETCAP_API_KEY"),
-  fetch_btc_value: System.get_env("EXCHANGE_RATES_FETCH_BTC_VALUE") == "true"
-
-exchange_rates_source =
-  cond do
-    System.get_env("EXCHANGE_RATES_SOURCE") == "coin_gecko" -> Explorer.ExchangeRates.Source.CoinGecko
-    System.get_env("EXCHANGE_RATES_SOURCE") == "coin_market_cap" -> Explorer.ExchangeRates.Source.CoinMarketCap
-    true -> Explorer.ExchangeRates.Source.CoinGecko
-  end
-
-config :explorer, Explorer.ExchangeRates.Source, source: exchange_rates_source
-
-config :explorer, Explorer.KnownTokens, enabled: System.get_env("DISABLE_KNOWN_TOKENS") != "true", store: :ets
-
 config :explorer, Explorer.Integrations.EctoLogger, query_time_ms_threshold: :timer.seconds(2)
-
-config :explorer, Explorer.Market.History.Cataloger, enabled: disable_indexer != "true"
 
 config :explorer, Explorer.Chain.Cache.MinMissingBlockNumber, enabled: System.get_env("DISABLE_WRITE_API") != "true"
 
@@ -224,31 +187,8 @@ config :explorer, Explorer.Tracer,
   adapter: SpandexDatadog.Adapter,
   trace_key: :blockscout
 
-if System.get_env("METADATA_CONTRACT") && System.get_env("VALIDATORS_CONTRACT") do
-  config :explorer, Explorer.Validator.MetadataRetriever,
-    metadata_contract_address: System.get_env("METADATA_CONTRACT"),
-    validators_contract_address: System.get_env("VALIDATORS_CONTRACT")
-
-  config :explorer, Explorer.Validator.MetadataProcessor, enabled: disable_indexer != "true"
-else
-  config :explorer, Explorer.Validator.MetadataProcessor, enabled: false
-end
-
-config :explorer, Explorer.Chain.Block.Reward,
-  validators_contract_address: System.get_env("VALIDATORS_CONTRACT"),
-  keys_manager_contract_address: System.get_env("KEYS_MANAGER_CONTRACT")
-
-case System.get_env("SUPPLY_MODULE") do
-  "rsk" ->
-    config :explorer, supply: Explorer.Chain.Supply.RSK
-
-  _ ->
-    :ok
-end
-
 config :explorer,
-  solc_bin_api_url: "https://solc-bin.ethereum.org",
-  checksum_function: System.get_env("CHECKSUM_FUNCTION") && String.to_atom(System.get_env("CHECKSUM_FUNCTION"))
+  solc_bin_api_url: "https://solc-bin.ethereum.org"
 
 config :logger, :explorer,
   # keep synced with `config/config.exs`
