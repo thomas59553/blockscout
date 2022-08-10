@@ -83,11 +83,11 @@ defmodule Explorer.Mixfile do
       {:junit_formatter, ">= 0.0.0", only: [:test], runtime: false},
       # Log errors and application output to separate files
       {:logger_file_backend, "~> 0.0.10"},
-      {:math, "~> 0.3.0"},
+      {:math, "~> 0.7.0"},
       {:mock, "~> 0.3.0", only: [:test], runtime: false},
       {:mox, "~> 1.0", only: [:test]},
       {:phoenix_html, "== 3.0.4"},
-      {:poison, "~> 4.0.1"},
+      {:poison, "~> 5.0.0"},
       {:nimble_csv, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
       # For compatibility with `prometheus_process_collector`, which hasn't been updated yet
