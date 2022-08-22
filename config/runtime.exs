@@ -158,6 +158,12 @@ config :ethereum_jsonrpc, EthereumJSONRPC.Geth, debug_trace_transaction_timeout:
 disable_indexer = System.get_env("DISABLE_INDEXER")
 disable_webapp = System.get_env("DISABLE_WEBAPP")
 
+healthy_blocks_period =
+  System.get_env("HEALTHY_BLOCKS_PERIOD", "5")
+  |> Integer.parse()
+  |> elem(0)
+  |> :timer.minutes()
+
 config :explorer,
   coin: System.get_env("COIN") || "POA",
   coin_name: System.get_env("COIN_NAME") || System.get_env("COIN") || "POA",
@@ -166,7 +172,7 @@ config :explorer,
       "homestead,tangerineWhistle,spuriousDragon,byzantium,constantinople,petersburg,istanbul,berlin,london,default",
   include_uncles_in_average_block_time:
     if(System.get_env("UNCLES_IN_AVERAGE_BLOCK_TIME") == "true", do: true, else: false),
-  healthy_blocks_period: System.get_env("HEALTHY_BLOCKS_PERIOD") || :timer.minutes(5),
+  healthy_blocks_period: healthy_blocks_period,
   realtime_events_sender:
     if(disable_webapp != "true",
       do: Explorer.Chain.Events.SimpleSender,
@@ -295,6 +301,10 @@ config :explorer, Explorer.ThirdPartyIntegrations.Sourcify,
   chain_id: System.get_env("CHAIN_ID"),
   repo_url: System.get_env("SOURCIFY_REPO_URL") || "https://repo.sourcify.dev/contracts"
 
+config :explorer, Explorer.SmartContract.RustVerifierInterface,
+  service_url: System.get_env("RUST_VERIFICATION_SERVICE_URL"),
+  enabled: System.get_env("ENABLE_RUST_VERIFICATION_SERVICE") == "true"
+
 ###############
 ### Indexer ###
 ###############
@@ -327,6 +337,7 @@ config :indexer,
   block_transformer: block_transformer,
   metadata_updater_seconds_interval:
     String.to_integer(System.get_env("TOKEN_METADATA_UPDATE_INTERVAL") || "#{2 * 24 * 60 * 60}"),
+  block_ranges: System.get_env("BLOCK_RANGES") || "",
   first_block: System.get_env("FIRST_BLOCK") || "",
   last_block: System.get_env("LAST_BLOCK") || "",
   trace_first_block: System.get_env("TRACE_FIRST_BLOCK") || "",
@@ -360,7 +371,6 @@ coin_balance_on_demand_fetcher_threshold =
 
 config :indexer, Indexer.Fetcher.CoinBalanceOnDemand, threshold: coin_balance_on_demand_fetcher_threshold
 
-# config :indexer, Indexer.Fetcher.ReplacedTransaction.Supervisor, disabled?: true
 config :indexer, Indexer.Fetcher.BlockReward.Supervisor,
   disabled?: System.get_env("INDEXER_DISABLE_BLOCK_REWARD_FETCHER", "false") == "true"
 
