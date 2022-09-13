@@ -248,6 +248,12 @@ defmodule Explorer.Chain.Address do
     end)
   end
 
+  def fetched_coin_balance(address_hash) when not is_nil(address_hash) do
+    Address
+    |> where([address], address.hash == ^address_hash)
+    |> select([address], address.fetched_coin_balance)
+  end
+
   @doc """
   Counts all the addresses where the `fetched_coin_balance` is > 0.
   """
@@ -256,16 +262,6 @@ defmodule Explorer.Chain.Address do
       a in Address,
       select: fragment("COUNT(*)"),
       where: a.fetched_coin_balance > ^0
-    )
-  end
-
-  @doc """
-  Counts all the addresses.
-  """
-  def count do
-    from(
-      a in Address,
-      select: fragment("COUNT(*)")
     )
   end
 
