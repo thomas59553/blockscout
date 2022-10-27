@@ -2,6 +2,7 @@
 
 ### Features
 
+- [#6351](https://github.com/blockscout/blockscout/pull/6351) - Enable forum link env var
 - [#6316](https://github.com/blockscout/blockscout/pull/6316) - Copy public tags functionality to master
 - [#6196](https://github.com/blockscout/blockscout/pull/6196) - INDEXER_CATCHUP_BLOCKS_BATCH_SIZE and INDEXER_CATCHUP_BLOCKS_CONCURRENCY env varaibles
 - [#6187](https://github.com/blockscout/blockscout/pull/6187) - Filter by created time of verified contracts in listcontracts API endpoint
@@ -29,9 +30,12 @@
 - [#6118](https://github.com/blockscout/blockscout/pull/6118) - Fix unfetched token balances
 - [#6163](https://github.com/blockscout/blockscout/pull/6163) - Fix rate limit logs
 - [#6223](https://github.com/blockscout/blockscout/pull/6223) - Fix coin_id test
+- [#6336](https://github.com/blockscout/blockscout/pull/6336) - Fix sending request on each key in token search
+- [#6327](https://github.com/blockscout/blockscout/pull/6327) - Fix and refactor address logs page and search
 
 ### Chore
 
+- [#6325](https://github.com/blockscout/blockscout/pull/6325) - Set http_only attribute of account authorization cookie to false
 - [#6343](https://github.com/blockscout/blockscout/pull/6343) - Docker-compose persistent logs
 - [#6240](https://github.com/blockscout/blockscout/pull/6240) - Elixir 1.14 support
 - [#6204](https://github.com/blockscout/blockscout/pull/6204) - Refactor contract libs render, CONTRACT_VERIFICATION_MAX_LIBRARIES, refactor parsing integer env vars in config
