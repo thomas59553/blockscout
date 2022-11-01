@@ -4456,6 +4456,8 @@ def fetch_sum_coin_total_supply do
 
   defp handle_paging_options(query, nil), do: query
 
+  defp handle_paging_options(query, %PagingOptions{key: nil, page_size: nil}), do: query
+
   defp handle_paging_options(query, paging_options) do
     query
     |> page_transaction(paging_options)
@@ -5244,6 +5246,12 @@ def fetch_sum_coin_total_supply do
       balances_with_dates
       |> Enum.sort(fn balance1, balance2 -> balance1.block_number >= balance2.block_number end)
     end
+  end
+
+  def get_token_balance(address_hash, token_contract_address_hash, block_number) do
+    query = TokenBalance.fetch_token_balance(address_hash, token_contract_address_hash, block_number)
+
+    Repo.one(query)
   end
 
   def get_coin_balance(address_hash, block_number) do
