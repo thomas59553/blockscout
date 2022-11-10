@@ -110,8 +110,8 @@ defmodule Explorer.Chain.TokenTransfer do
       type: Hash.Full
     )
 
-    has_one(
-      :instance,
+    has_many(
+      :instances,
       Instance,
       foreign_key: :token_contract_address_hash,
       references: :token_contract_address_hash
@@ -177,7 +177,7 @@ defmodule Explorer.Chain.TokenTransfer do
       from(
         tt in TokenTransfer,
         where: tt.token_contract_address_hash == ^token_address_hash,
-        where: tt.token_id == ^token_id or fragment("? @> ARRAY[?::decimal]", tt.token_ids, ^Decimal.new(token_id)),
+        where: fragment("? @> ARRAY[?::decimal]", tt.token_ids, ^Decimal.new(token_id)),
         where: not is_nil(tt.block_number),
         preload: [{:transaction, :block}, :token, :from_address, :to_address],
         order_by: [desc: tt.block_number]
@@ -208,7 +208,7 @@ defmodule Explorer.Chain.TokenTransfer do
         tt in TokenTransfer,
         where:
           tt.token_contract_address_hash == ^token_address_hash and
-            (tt.token_id == ^token_id or fragment("? @> ARRAY[?::decimal]", tt.token_ids, ^Decimal.new(token_id))),
+            fragment("? @> ARRAY[?::decimal]", tt.token_ids, ^Decimal.new(token_id)),
         select: fragment("COUNT(*)")
       )
 
@@ -218,11 +218,11 @@ defmodule Explorer.Chain.TokenTransfer do
   def page_token_transfer(query, %PagingOptions{key: nil}), do: query
 
   def page_token_transfer(query, %PagingOptions{key: {token_id}, asc_order: true}) do
-    where(query, [tt], tt.token_id > ^token_id)
+    where(query, [tt], fragment("?[1] > ?", tt.token_ids, ^token_id))
   end
 
   def page_token_transfer(query, %PagingOptions{key: {token_id}}) do
-    where(query, [tt], tt.token_id < ^token_id)
+    where(query, [tt], fragment("?[1] < ?", tt.token_ids, ^token_id))
   end
 
   def page_token_transfer(query, %PagingOptions{key: {block_number, log_index}, asc_order: true}) do
