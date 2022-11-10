@@ -5399,6 +5399,14 @@ def fetch_sum_coin_total_supply do
     |> Instance.page_token_instance(paging_options)
     |> limit(^paging_options.page_size)
     |> Repo.all()
+    |> Enum.map(fn instance ->
+      owner =
+        instance
+        |> Instance.owner_query()
+        |> Repo.one()
+
+      %{instance | owner: owner}
+    end)
   end
 
   @spec data() :: Dataloader.Ecto.t()
