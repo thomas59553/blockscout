@@ -25,7 +25,7 @@ defmodule Explorer.Chain.TokenTransfer do
   use Explorer.Schema
 
   import Ecto.Changeset
-  import Ecto.Query, only: [from: 2, limit: 2, where: 3]
+  import Ecto.Query, only: [from: 2, limit: 2, where: 3, join: 5, order_by: 3, preload: 3]
 
   alias Explorer.Chain.{Address, Block, Hash, TokenTransfer, Transaction}
   alias Explorer.Chain.Token.Instance
@@ -241,6 +241,16 @@ defmodule Explorer.Chain.TokenTransfer do
     )
   end
 
+  def handle_paging_options(query, nil), do: query
+
+  def handle_paging_options(query, %PagingOptions{key: nil, page_size: nil}), do: query
+
+  def handle_paging_options(query, paging_options) do
+    query
+    |> page_token_transfer(paging_options)
+    |> limit(^paging_options.page_size)
+  end
+
   @doc """
   Fetches the transaction hashes from token transfers according
   to the address hash.
@@ -305,43 +315,50 @@ defmodule Explorer.Chain.TokenTransfer do
     )
   end
 
-  @doc """
+   @doc """
   Counts all the token transfer per day
  """
-  def count_transfers_per_day do
-    from(
-      t in TokenTransfer,
-      inner_join: b in Block,
-      on: t.block_number == b.number,
-      select: [fragment("date_trunc('day', ?)", b.timestamp), fragment("COUNT(*)")],
-      where: fragment("timestamp > date_trunc('day', now()) - INTERVAL '30 DAY' AND timestamp < date_trunc('day', now())"),
-      group_by: [1],
-      order_by: [1]
-    )
+ def count_transfers_per_day do
+  from(
+    t in TokenTransfer,
+    inner_join: b in Block,
+    on: t.block_number == b.number,
+    select: [fragment("date_trunc('day', ?)", b.timestamp), fragment("COUNT(*)")],
+    where: fragment("timestamp > date_trunc('day', now()) - INTERVAL '30 DAY' AND timestamp < date_trunc('day', now())"),
+    group_by: [1],
+    order_by: [1]
+  )
+end
+
+  def token_transfers_by_address_hash(direction, address_hash, token_types) do
+    TokenTransfer
+    |> filter_by_direction(direction, address_hash)
+    |> order_by([tt], desc: tt.block_number, desc: tt.log_index)
+    |> join(:inner, [tt], token in assoc(tt, :token), as: :token)
+    |> preload([token: token], [{:token, token}])
+    |> filter_by_type(token_types)
   end
 
-
-
-  @doc """
-  Innventory tab query.
-  A token ERC-721 is considered unique because it corresponds to the possession
-  of a specific asset.
-
-  To find out its current owner, it is necessary to look at the token last
-  transfer.
-  """
-  @spec address_to_unique_tokens(Hash.Address.t()) :: Ecto.Query.t()
-  def address_to_unique_tokens(contract_address_hash) do
-    from(
-      tt in TokenTransfer,
-      left_join: instance in Instance,
-      on: tt.token_contract_address_hash == instance.token_contract_address_hash and tt.token_id == instance.token_id,
-      where: tt.token_contract_address_hash == ^contract_address_hash,
-      where: tt.to_address_hash != ^"0x0000000000000000000000000000000000000000",
-      order_by: [desc: tt.block_number],
-      distinct: [desc: tt.token_id],
-      preload: [:to_address],
-      select: %{tt | instance: instance}
-    )
+  def filter_by_direction(query, :to, address_hash) do
+    query
+    |> where([tt], tt.to_address_hash == ^address_hash)
   end
+
+  def filter_by_direction(query, :from, address_hash) do
+    query
+    |> where([tt], tt.from_address_hash == ^address_hash)
+  end
+
+  def filter_by_direction(query, _, address_hash) do
+    query
+    |> where([tt], tt.from_address_hash == ^address_hash or tt.to_address_hash == ^address_hash)
+  end
+
+  def filter_by_type(query, []), do: query
+
+  def filter_by_type(query, token_types) when is_list(token_types) do
+    where(query, [token: token], token.type in ^token_types)
+  end
+
+  def filter_by_type(query, _), do: query
 end
