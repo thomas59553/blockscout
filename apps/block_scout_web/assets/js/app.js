@@ -40,5 +40,6 @@ import './lib/ad'
 import './lib/ad'
 
 import swal from 'sweetalert2'
+// @ts-ignore
 window.Swal = swal
 >>>>>>> 9e86794777ab9d5cadf2aa594fbc5494cc4a79e3
