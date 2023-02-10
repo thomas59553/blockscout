@@ -38,6 +38,7 @@ import './lib/card_tabs'
 import './lib/ad'
 =======
 import './lib/ad'
+import './lib/dark_mode'
 
 import swal from 'sweetalert2'
 // @ts-ignore

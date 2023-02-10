@@ -36,6 +36,7 @@ const appJs =
   {
     entry: {    
       'app': './js/app.js',
+      'app_extra': './js/app_extra.js',
       'chart-loader': './js/chart-loader.js',
       'balance-chart-loader': './js/balance-chart-loader.js',
       'home-charts-loader': './js/home-charts-loader.js',      
