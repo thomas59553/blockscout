@@ -19,9 +19,11 @@
 - [#6889](https://github.com/blockscout/blockscout/pull/6889) - Fix Internal Server Error on tx input decoding
 - [#6893](https://github.com/blockscout/blockscout/pull/6893) - Fix token type definition for multiple interface tokens
 - [#6922](https://github.com/blockscout/blockscout/pull/6922) - Fix WebSocketClient
+- [#6501](https://github.com/blockscout/blockscout/pull/6501) - Fix wss connect
 
 ### Chore
 
+- [#6929](https://github.com/blockscout/blockscout/pull/6929) - Extend `INDEXER_MEMORY_LIMIT` env parsing
 - [#6902](https://github.com/blockscout/blockscout/pull/6902) - Increase verification timeout to 120 seconds for microservice verification
 
 <details>
